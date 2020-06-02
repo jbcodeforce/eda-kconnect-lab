@@ -1,0 +1,23 @@
+@startuml 
+!include ./C4_Container.puml
+
+LAYOUT_TOP_DOWN
+System(casher,"Cashing Machine")
+System_Boundary(c1,"Inventory System") {
+    Container(message_bus, "Message Bus", "RabbitMQ", "Point to point transport for transactions")
+    Container(rmq_src_connector, "RMQ Source", "Kafka Connect", "Map from queue to topic")
+  
+    Container(event_backbone, "Event Backbone", "Kafka", "Event sourcing pub/sub messaging")
+    Container(kstreams,"Aggregator", "Kafka Streams", "Aggregate store inventory")
+    Container(jdbc_sink_connector,"Kafka Connect","JDBC Sink Connector")
+}
+System(db,"Inventory DB")
+Rel(casher,message_bus,"Sends transactions to", "TCP")
+Rel(message_bus,rmq_src_connector,"Listens to queue","TCP")
+Rel(rmq_src_connector,event_backbone,"Publishes to transactions topic","TCP")
+Rel(event_backbone, kstreams,"Subscribes to transactions","TCP")
+Rel(kstreams,event_backbone,"Publish to inventory topic", "TCP")
+Rel(event_backbone,jdbc_sink_connector,"Subscribes to inventory topic", "TCP")
+Rel(jdbc_sink_connector,db,"Write records","SQL")
+Lay_R(rmq_src_connector,event_backbone)
+@enduml

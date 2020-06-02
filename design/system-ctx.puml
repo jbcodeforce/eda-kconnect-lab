@@ -1,0 +1,19 @@
+@startuml 
+!include ./C4_Context.puml
+!include ./C4_Container.puml
+LAYOUT_TOP_DOWN
+Person(manager, "Inventory Manager", "Manage inventory cross stores")
+Person(admin, "Administrator")
+System(casher,"Cashing Machine")
+System_Boundary(c1,"Inventory System") {
+    Container(solution,"Real Time Inventory", "Reactive Messaging, Kafka, Kafka Connect","Allows real time view of stores inventory")
+}
+System(db,"Inventory DB")
+System(inventoryApp,"Inventory App")
+Rel(casher,solution,"Publishes","Transaction")
+Rel(admin,solution, "Uses","Dashboard")
+Rel(manager,solution, "Uses","Queries")
+Rel(solution,db,"Uses", "jdbc")
+Rel(inventoryApp,db,"Uses", "jdbc")
+Rel(solution,inventoryApp,"Listen","Messaging")
+@enduml
