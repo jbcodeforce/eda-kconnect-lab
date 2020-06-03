@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "inventory-app"
+		},
+		{
+			"name": "store-sale-producer",
+			"path": "store-producer/store-sale-producer"
+		},
+		{
+			"path": "kconnect"
+		},
+		{
+			"path": "design"
+		},
+		{
+			"path": "integration-tests"
+		},
+		{
+			"path": "infrastructure"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}

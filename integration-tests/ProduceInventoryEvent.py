@@ -1,0 +1,71 @@
+'''
+Produce inventory events to kafka inventory topic.
+
+This is an integration test to validate the JDBC Sink to DB2
+'''
+import time 
+import json, os, sys
+import random
+
+from kafka.KafkaProducer import KafkaProducer
+import kafka.EventBackboneConfiguration as ebc
+
+GROUPID="ProducerInventory"
+NBRECORDS=1
+TOPICNAME="inventory"
+STORES = [ 'SC01','SF01','SF02','PT01', 'PT02', 'SEA01','NYC01','NYC02', 'LA01', 'LA02' ]
+KEYNAME = 'id'
+
+def parseArguments():
+    topic = TOPICNAME
+    size = NBRECORDS
+
+    if len(sys.argv) == 1:
+        print("Usage: ProduceInventoryEvents --size integer --topic topicname")
+        exit(1)
+    else:
+        for idx in range(1, len(sys.argv)):
+            arg=sys.argv[idx]
+            if arg == "--size":
+                sizeArg = sys.argv[idx+1]
+                if sizeArg not in ['small','medium', 'large']:
+                    size = int(sizeArg)
+                if sizeArg == "medium":
+                    size = 10000
+                if sizeArg == "large":
+                    size = 100000
+            if arg == "--topic":
+                topic =sys.argv[idx+1]
+            if arg == "--help":
+                print("Send n messages to a kafka cluster. Use environment variables KAFKA_BROKERS")
+                print(" and KAFKA_APIKEY is the cluster accept sasl connection with token user")
+                print(" and KAFKA_CERT to ca.crt path to add for TLS communication when using TLS")
+                print(" --size small  | medium| large | a_number")
+                print("        small= 1000| medium= 10k| large= 100k")
+                print(" --topic topicname")
+                exit(0)
+    return size, topic
+
+def processRecords(nb_records,topicname):
+    print("Produce to the topic " + topicname)
+    try:
+        producer = KafkaProducer(kafka_brokers = ebc.getBrokerEndPoints(), 
+                kafka_apikey = ebc.getEndPointAPIKey(), 
+                kafka_cacert = ebc.getKafkaCertificate(),
+                topic_name = topicname)
+        producer.prepare(groupID= GROUPID)
+        for i in range(0,nb_records):
+            docToSend = {} 
+            docToSend['storeName'] = STORES[random.randint(0,len(STORES))]
+            docToSend['itemCode'] = 'IT0' + str(random.randint(0,9))
+            docToSend['id']=i;
+            docToSend['timestamp'] = time.time()
+            print("sending -> " + str(docToSend))
+            producer.publishEvent(docToSend,KEYNAME)
+    except KeyboardInterrupt:
+        input('Press enter to continue')
+        print("Thank you")
+
+if __name__ == "__main__":
+    size, topic = parseArguments()
+    processRecords(size,topic)
