@@ -4,6 +4,7 @@ Produce inventory events to kafka inventory topic.
 This is an integration test to validate the JDBC Sink to DB2
 '''
 import time 
+from datetime import datetime
 import json, os, sys
 import random
 
@@ -56,10 +57,14 @@ def processRecords(nb_records,topicname):
         producer.prepare(groupID= GROUPID)
         for i in range(0,nb_records):
             docToSend = {} 
-            docToSend['storeName'] = STORES[random.randint(0,len(STORES))]
+            docToSend['storeName'] = STORES[random.randint(0,len(STORES)-1)]
             docToSend['itemCode'] = 'IT0' + str(random.randint(0,9))
+            docToSend['quantity'] = random.randint(0,20)
+            docToSend['price'] = random.randint(20,200)
             docToSend['id']=i;
-            docToSend['timestamp'] = time.time()
+            dateTimeObj = datetime.now()
+            timestampStr = dateTimeObj.strftime("%d-%b-%Y %H:%M:%S")
+            docToSend['timestamp'] = timestampStr
             print("sending -> " + str(docToSend))
             producer.publishEvent(docToSend,KEYNAME)
     except KeyboardInterrupt:

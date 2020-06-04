@@ -16,10 +16,11 @@ public class Inventory extends PanacheEntity {
     @GeneratedValue(generator = "inventory-seq-generator", strategy = GenerationType.SEQUENCE)
     @Column(unique=true, nullable=false)
     public Long id;
-    public Long storeName;
-    public Long itemCode;
+    public String storeName;
+    public String itemCode;
     public Long quantity;
-    public Long timestamp;
+    public Double price;
+    public String timestamp;
     
     public Inventory(){}
 }

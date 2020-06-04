@@ -1,0 +1,14 @@
+{
+  "name": "jdbc-sink-connector",
+  "config": {
+    "connector.class": "com.ibm.eventstreams.connect.jdbcsink.JDBCSinkConnector",
+    "tasks.max": "1",
+    "topics": "inventory",
+    "connection.url": "jdbc:db2://dashdb-txn-sbox-yp-dal09-03.services.dal.bluemix.net:50001/BLUDB:sslConnection=true;",
+    "connection.user": "cbm39816",
+    "connection.password": "lhtg0x3b9gw0-665",
+    "connection.ds.pool.size": "1",
+    "insert.mode.databaselevel": "true",
+    "table.name.format": "CBM39816.INVENTORY"
+  }
+}

@@ -1,6 +1,6 @@
 version: '3'
 services:
-    zookeeper1:
+    zookeeper:
         image: strimzi/kafka:latest-kafka-2.5.0
         hostname: zookeeper
         command: [
@@ -18,7 +18,7 @@ services:
         volumes:
             - ./zookeeper/data:/data
             - ./zookeeper/datalog:/datalog
-    kafka1:
+    kafka:
         image: strimzi/kafka:latest-kafka-2.5.0
         hostname: kafka
         command: [
@@ -45,6 +45,10 @@ services:
         ports:
             - '15672:15672'
             - '5672:5672'
+    kconnect:
+        image: ibmcase/kconlab:1.0.0
+        ports:
+            - '8083:8083'
 networks:
     default:
         external:

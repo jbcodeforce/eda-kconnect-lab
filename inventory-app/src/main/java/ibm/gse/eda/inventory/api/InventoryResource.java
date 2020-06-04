@@ -1,5 +1,6 @@
 package ibm.gse.eda.inventory.api;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -28,10 +29,11 @@ import io.quarkus.panache.common.Sort;
 @Produces("application/json")
 @Consumes("application/json")
 public class InventoryResource {
-
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+      
     @GET
     public List<Inventory> get() {
-        return Inventory.listAll(Sort.by("storeId"));
+        return Inventory.listAll(Sort.by("storename"));
     }
 
     @GET
@@ -44,25 +46,37 @@ public class InventoryResource {
         return entity;
     }
 
+
+    @GET
+    @Path("store/{storename}")
+    public List<Inventory> getInventoryByStoreName(@PathParam String storename) {
+        List<Inventory> entities = Inventory.find("storename", Sort.by("ITEMCODE"), storename).list();
+        if (entities == null) {
+            throw new WebApplicationException("Inventory with storename of " + storename + " does not exist.", 404);
+        }
+        return entities;
+    }
+
+
     @POST
     @Transactional
-    public Response create(Inventory Inventory) {
-        if (Inventory.id != null) {
+    public Response create(Inventory inventory) {
+        if (inventory.id != null) {
             throw new WebApplicationException("Id was invalidly set on request.", 422);
         }
-
-        Inventory.persist();
-        return Response.ok(Inventory).status(201).build();
+        inventory.timestamp = simpleDateFormat.format(new Date());
+        inventory.persist();
+        return Response.ok(inventory).status(201).build();
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Inventory update(@PathParam Long id, Inventory Inventory) {
-        if (Inventory.storeId == null) {
+    public Inventory update(@PathParam Long id, Inventory inventory) {
+        if (inventory.storeName == null) {
             throw new WebApplicationException("Inventory storeId was not set on request.", 422);
         }
-        if (Inventory.itemId == null) {
+        if (inventory.itemCode == null) {
             throw new WebApplicationException("Inventory itemId was not set on request.", 422);
         }
 
@@ -72,10 +86,10 @@ public class InventoryResource {
             throw new WebApplicationException("Inventory with id of " + id + " does not exist.", 404);
         }
 
-        entity.storeId = Inventory.storeId;
-        entity.itemId = Inventory.itemId;
-        entity.quantity = Inventory.quantity;
-        entity.timestamp = (new Date().getTime());
+        entity.storeName = inventory.storeName;
+        entity.itemCode = inventory.itemCode;
+        entity.quantity = inventory.quantity;
+        entity.timestamp = simpleDateFormat.format(new Date());
         return entity;
     }
 

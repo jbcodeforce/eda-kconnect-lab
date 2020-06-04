@@ -43,6 +43,17 @@ public class StoreResource {
         return entity;
     }
 
+
+    @GET
+    @Path("name/{name}")
+    public Store getStoreByName(@PathParam String name) {
+        Store entity = Store.find("name", name).firstResult();
+        if (entity == null) {
+            throw new WebApplicationException("Store with code of " + name + " does not exist.", 404);
+        }
+        return entity;
+    }
+
     @POST
     @Transactional
     public Response create(Store Store) {

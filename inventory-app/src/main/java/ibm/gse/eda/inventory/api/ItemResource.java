@@ -43,6 +43,16 @@ public class ItemResource {
         return entity;
     }
 
+    @GET
+    @Path("name/{code}")
+    public Item getItemByCode(@PathParam String code) {
+        Item entity = Item.find("code", code).firstResult();
+        if (entity == null) {
+            throw new WebApplicationException("Item with code of " + code + " does not exist.", 404);
+        }
+        return entity;
+    }
+
     @POST
     @Transactional
     public Response create(Item Item) {

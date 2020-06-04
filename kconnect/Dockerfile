@@ -13,7 +13,7 @@ COPY --chown=esuser:esgroup --from=builder /opt/kafka/config/connect-log4j.prope
 RUN mkdir /opt/kafka/logs && chown esuser:esgroup /opt/kafka/logs && \
     mkdir /opt/connectors && chown esuser:esgroup /opt/connectors
 COPY --chown=esuser:esgroup libs/db2jcc4.jar /opt/kafka/libs/
-# COPY connect-distributed.properties /opt/kafka/config/connect-distributed.properties
+COPY connect-distributed.properties /opt/kafka/config/connect-distributed.properties
 # Uncomment following is you use kafka with TLS certificate or schema registry
 # COPY --chown=esuser:esgroup certs/registry-es-cert.jks /opt/kafka/registry-es-cert.jks 
 # COPY --chown=esuser:esgroup es-cert.jks /opt/kafka/

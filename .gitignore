@@ -2,3 +2,6 @@ kconnect/libs/
 scripts/setenv.sh
 kconnect/connect-distributed.properties
 kconnect/db2-connector-config.json
+kconnect/kafka-connect-jdbc-sink/
+kconnect/kafka-connect-mq-sink/
+kconnect/kafka-connect-rabbitmq-source/
