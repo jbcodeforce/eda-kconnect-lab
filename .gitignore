@@ -6,3 +6,4 @@ kconnect/kafka-connect-jdbc-sink/
 kconnect/kafka-connect-mq-sink/
 kconnect/kafka-connect-rabbitmq-source/
 kconnect/db2-sink-config.json
+infrastructure/qm1data/
