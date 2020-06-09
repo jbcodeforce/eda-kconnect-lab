@@ -1,13 +1,14 @@
-# store-sale-producer project
+# Store sale producer service
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This component is a mockup of stores activities around selling items of the inventory. 
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+It uses [Quarkus](https://quarkus.io) with the AMQP qpid-jms extension to send messages to RabbitMQ. This code is used to demonstrate RabbitMQ to Kafka with Kafka Connect [IBM RabbitMQ source connector](https://github.com/ibm-messaging/kafka-connect-rabbitmq-source). The application is also a microservice to expose a get messages using paging.
 
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
-```
+
+```shell
 ./mvnw quarkus:dev
 ```
 

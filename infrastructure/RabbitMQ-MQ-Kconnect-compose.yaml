@@ -1,0 +1,36 @@
+version: '3'
+services:
+    # credentials guest:guest
+    rabbitmq:
+        image: rabbitmq:3-management
+        ports:
+            - '15672:15672'
+            - '5672:5672'
+    kconnect:
+        build: ../kconnect
+        image: ibmcase/kconlab:1.0.0
+        ports:
+            - '8083:8083'
+    inventoryapp:
+        build: ../inventory-app
+        image: ibmcase/eda-inventory-app:1.0.0
+        ports:
+            - '8080:8080'
+    # No persistence used
+    ibmmq:
+        image: ibmcom/mq
+        ports:
+            - '1414:1414'
+            - '9443:9443'
+            - '9157:9157'
+        volumes:
+            - ./qm1data:/mnt/mqm
+        environment:
+            LICENSE: "accept"
+            MQ_QMGR_NAME: "QM1"
+            MQ_APP_PASSWORD: "admin"
+            MQ_ENABLE_METRICS: "true"
+networks:
+    default:
+        external:
+            name: labnet

@@ -18,6 +18,12 @@
 		},
 		{
 			"path": "infrastructure"
+		},
+		{
+			"path": "../../jbcodeforce/quarkus-event-driven-consumer-microservice-template"
+		},
+		{
+			"path": "inventory-mq-listener"
 		}
 	],
 	"settings": {

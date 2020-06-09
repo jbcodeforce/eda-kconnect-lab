@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>inventory-app</module>
+	<module>inventory-mq-listener</module>
     </modules>
     <build>
         <plugins>
