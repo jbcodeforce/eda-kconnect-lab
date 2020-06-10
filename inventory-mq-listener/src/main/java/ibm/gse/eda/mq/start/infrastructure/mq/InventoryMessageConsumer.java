@@ -10,6 +10,7 @@ import javax.jms.Destination;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.json.bind.Jsonb;
 
 import com.ibm.msg.client.jms.JmsConnectionFactory;
@@ -17,6 +18,7 @@ import com.ibm.msg.client.jms.JmsFactoryFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.jboss.logging.Logger;
 
 import ibm.gse.eda.mq.start.domain.InventoryMessage;
 import ibm.gse.eda.mq.start.dto.InventoryEntry;
@@ -25,7 +27,8 @@ import io.quarkus.runtime.StartupEvent;
 
 @ApplicationScoped
 public class InventoryMessageConsumer implements Runnable {
-
+    private static final Logger LOG = Logger.getLogger(InventoryMessageConsumer.class);
+    
     @Inject
     @ConfigProperty(name = "mq.host")
     public String mqHostname;
@@ -68,6 +71,7 @@ public class InventoryMessageConsumer implements Runnable {
     private final ExecutorService scheduler = Executors.newSingleThreadExecutor();
     
     public InventoryMessageConsumer() throws JMSException {
+        LOG.info("@@@@ Inventory Message Consumer created @@@@");
         JmsFactoryFactory ff;
         ff = JmsFactoryFactory.getInstance(WMQConstants.WMQ_PROVIDER);
         cf = ff.createConnectionFactory();
@@ -76,26 +80,55 @@ public class InventoryMessageConsumer implements Runnable {
     private volatile InventoryEntry lastMessage;
 
     void onStart(@Observes StartupEvent ev) {
+        LOG.info("@@@@ Inventory Message Consumer on start event @@@@");
         scheduler.submit(this);
     }
 
     void onStop(@Observes ShutdownEvent ev) {
+        LOG.info("@@@@ Inventory Message Consumer on stop event @@@@");
         scheduler.shutdown();
+    }
+
+    public void init() throws JMSException {
+        // Set the properties
+        cf.setStringProperty(WMQConstants.WMQ_HOST_NAME, this.mqHostname);
+        cf.setIntProperty(WMQConstants.WMQ_PORT, this.mqHostport);
+        cf.setIntProperty(WMQConstants.WMQ_CONNECTION_MODE, WMQConstants.WMQ_CM_CLIENT);
+        cf.setStringProperty(WMQConstants.WMQ_QUEUE_MANAGER, this.mqQmgr);
+        cf.setStringProperty(WMQConstants.WMQ_APPLICATIONNAME, this.appName);
+        cf.setStringProperty(WMQConstants.WMQ_CHANNEL, this.mqChannel);
+        cf.setBooleanProperty(WMQConstants.USER_AUTHENTICATION_MQCSP, true);
+        cf.setStringProperty(WMQConstants.USERID, this.mqAppUser);
+        cf.setStringProperty(WMQConstants.PASSWORD, this.mqPassword);
+        // Create JMS objects
+        jmsContext = cf.createContext();
+        destination = jmsContext.createQueue("queue:///" + this.mqQueueName);
+        LOG.info("@@@@ " + toJson());
     }
 
     @Override
     public void run() {
-        consumer = getJmsContext().createConsumer(getDestination()); // autoclosable
-        while (continueToRun) {
-            String receivedMessage = consumer.receiveBody(String.class, 15000); // in ms or 15 seconds
-            if (receivedMessage == null) {
-                // receive returns `null` if the JMSConsumer is closed
-                return;
+        try {
+            init();
+            consumer = getJmsContext().createConsumer(getDestination()); // autoclosable
+            LOG.info(("MQ JMS Consumer created entering in infinite loop"));
+            while (continueToRun) {
+                Message message = consumer.receive();
+                if (message == null) {
+                    LOG.info("receive returns `null` if the JMSConsumer is closed");
+                    return;
+                }
+                String receivedMessage = message.getBody(String.class); // in ms or 5 seconds
+                LOG.info("\n@@@@ Received message:\n" + receivedMessage);
+                InventoryMessage itemSold = jsonb.fromJson(receivedMessage, InventoryMessage.class);
+                // process the itemSold HERE
+                lastMessage = InventoryEntry.builder(itemSold);
+               
             }
-            InventoryMessage itemSold = jsonb.fromJson(receivedMessage, InventoryMessage.class);
-            // process the itemSold HERE
-            lastMessage = InventoryEntry.builder(itemSold);
-            System.out.println("\nReceived message:\n" + receivedMessage);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        } finally {
+            onStop(null);
         }
     }
 

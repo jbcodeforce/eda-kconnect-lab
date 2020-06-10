@@ -10,5 +10,5 @@ if [ "$KAFKA_BROKERS" != "localhost:9092" ]
 then   
     docker run -e KAFKA_BROKERS=$KAFKA_BROKERS -e KAFKA_APIKEY=$KAFKA_APIKEY --rm --name $name -v $(pwd):/home -it  ibmcase/python37 bash
 else
-    docker run --network="kafkanet" -e KAFKA_BROKERS=$KAFKA_BROKERS --rm --name $name -v $(pwd):/home -it  ibmcase/python37 bash
+    docker run --network="labnet" -e KAFKA_BROKERS=$KAFKA_BROKERS --rm --name $name -v $(pwd):/home -it  ibmcase/python37 bash
 fi 

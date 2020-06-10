@@ -14,7 +14,7 @@ import ibm.gse.eda.mq.start.infrastructure.mq.InventoryMessageConsumer;
 @Produces("application/json")
 public class MessageResource {
 
-     @Inject
+    @Inject
     public InventoryMessageConsumer messageConsumer;
 
     public MessageResource(){
