@@ -24,6 +24,12 @@
 		},
 		{
 			"path": "inventory-mq-listener"
+		},
+		{
+			"path": "../../jbcodeforce/rmqtokafka"
+		},
+		{
+			"path": "../../AllCloudPaks/reeferiotsimulator"
 		}
 	],
 	"settings": {
