@@ -64,8 +64,8 @@ curl -X DELETE  http://localhost:8083/connectors/mq-sink
 ```
 
 ```
-docker exec -ti a84d74f31366 bash
-bash-4.4$ /opt/mqm/samp/bin/amqsget DEV.QUEUE.1 QM1
+docker exec -ti ibmmq bash
+bash-4.4$ /opt/mqm/samp/bin/amqsget INVENTORY QM1
 Sample AMQSGET0 start
 message <{"storeName": "NYC02", "itemCode": "IT02", "quantity": 11, "price": 113, "id": 0, "timestamp": "15-Jun-2020 23:56:30"}>
 no more messages
