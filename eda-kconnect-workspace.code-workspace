@@ -30,6 +30,9 @@
 		},
 		{
 			"path": "../../AllCloudPaks/reeferiotsimulator"
+		},
+		{
+			"path": "../../AllCloudPaks/coldchainmonitoring"
 		}
 	],
 	"settings": {

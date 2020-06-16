@@ -48,7 +48,7 @@ def parseArguments():
     return size, topic
 
 def processRecords(nb_records,topicname):
-    print("Produce to the topic " + topicname)
+    print("Produce " + str(nb_records) + " messages to the topic " + topicname)
     try:
         producer = KafkaProducer(kafka_brokers = ebc.getBrokerEndPoints(), 
                 kafka_apikey = ebc.getEndPointAPIKey(), 

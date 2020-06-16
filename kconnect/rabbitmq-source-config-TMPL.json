@@ -1,5 +1,5 @@
 {
-  "name": "jdbc-sink-connector",
+  "name": "rabbitmq-source-connector",
   "config": {
     "connector.class": "com.ibm.eventstreams.connect.jdbcsink.JDBCSinkConnector",
     "tasks.max": "1",

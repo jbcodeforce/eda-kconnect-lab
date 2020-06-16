@@ -13,7 +13,7 @@ if [[ "$response" != "n"  ]]
 then
    git clone https://github.com/ibm-messaging/kafka-connect-mq-sink
    cd kafka-connect-mq-sink
-   mvn install package
+   mvn clean  package
    cp ./target/kafka-connect*jar-with-dependencies.jar ../libs/
 fi
 
@@ -23,16 +23,16 @@ if [[ "$response" != "n"  ]]
 then
    git clone https://github.com/ibm-messaging/kafka-connect-jdbc-sink.git
    cd kafka-connect-jdbc-sink
-   mvn install package
+   mvn clean  package
    cp ./target/kafka-connect*jar-with-dependencies.jar ../libs/
 fi
 
-echo "Do you want to use IBM RabbitMA source [Y/n] ?"
+echo "Do you want to use IBM RabbitMQ source [Y/n] ?"
 read response
 if [[ "$response" != "n"  ]]
 then
    git clone https://github.com/ibm-messaging/kafka-connect-rabbitmq-source
    cd kafka-connect-rabbitmq-source
-   mvn install package
+   mvn clean  package
    cp ./target/kafka-connect*jar-with-dependencies.jar ../libs/
 fi

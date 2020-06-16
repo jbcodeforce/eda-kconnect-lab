@@ -1,8 +1,9 @@
-# jms-demo project
+# Inventory MQ Listener project
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This project uses [Quarkus](https://quarkus.io/) with reactive messaging.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Anatomy
+
 
 ## Running the application in dev mode
 
