@@ -16,19 +16,16 @@
 			"path": "infrastructure"
 		},
 		{
-			"path": "../../jbcodeforce/quarkus-event-driven-consumer-microservice-template"
-		},
-		{
 			"path": "inventory-mq-listener"
-		},
-		{
-			"path": "../../AllCloudPaks/reeferiotsimulator"
 		},
 		{
 			"path": "../../AllCloudPaks/coldchainmonitoring"
 		},
 		{
 			"path": "store-sale-producer"
+		},
+		{
+			"path": "../refarch-eda"
 		}
 	],
 	"settings": {

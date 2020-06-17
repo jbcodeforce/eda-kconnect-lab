@@ -17,6 +17,11 @@ services:
         image: ibmcase/kconlab:1.0.0
         ports:
             - '8083:8083'
+    storeSaleGenerator:
+        hostname: storeapp
+        image: ibmcase/store-sale-producer:1.0.0
+        ports:
+            - '8080:8080'
 networks:
     default:
         external:

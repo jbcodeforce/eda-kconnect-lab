@@ -46,27 +46,30 @@ docker build -t ibmcase/kconlab:1.0.0 .
 
 ### Run locally
 
-Under the `infrastructure` folder we have different docker compose depending of the backend to start:
+Under the `infrastructure` folder we have different docker compose file to support different test scenarios:
 
 * `MQ-Kconnect-compose.yaml` for IBM MQ and the kafka connect.
-* `RabbitMQ-Kconnect-compose.yaml` for Rabbit MQ wQ
+* `RabbitMQ-Kconnect-compose.yaml` for Rabbit MQ with Kafka Connect and the Store item sales generator app.
 
 ### Rabbit MQ
 
-Quick set of things to start and do:
+Quick set of things to do:
 
-```
-# Start Rabbit mq and connect: under infrastructure
+```shell
+# Start Rabbit mq and kafka connect and the store item sale generator: under infrastructure
+
 docker-compose -f  RabbitMQ-Kconnect-compose.yaml up
 # Upload the connector configuration
 curl -X POST -H "Content-Type: application/json" http://localhost:8083/connectors   --data "@./rabbitmq-source.json"
-# Delete the connector
+```
+
+# Once done delete the connector
+
+```
 curl -X DELETE http://localhost:8083/connectors/RabbitMQSourceConnector
 ```
 
-```shell
-docker-compose up &
-```
+## IBM MQ Sink connector
 
 Deploy the connector with a POST to the connectors url
 
