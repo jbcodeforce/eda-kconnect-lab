@@ -1,4 +1,4 @@
-package ibn.gse.eda.stores.domain;
+package ibm.gse.eda.stores.domain;
 
 public class ItemSaleMessage {
     public Long id;

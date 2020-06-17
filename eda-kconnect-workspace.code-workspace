@@ -4,10 +4,6 @@
 			"path": "inventory-app"
 		},
 		{
-			"name": "store-sale-producer",
-			"path": "store-producer/store-sale-producer"
-		},
-		{
 			"path": "kconnect"
 		},
 		{
@@ -26,13 +22,13 @@
 			"path": "inventory-mq-listener"
 		},
 		{
-			"path": "../../jbcodeforce/rmqtokafka"
-		},
-		{
 			"path": "../../AllCloudPaks/reeferiotsimulator"
 		},
 		{
 			"path": "../../AllCloudPaks/coldchainmonitoring"
+		},
+		{
+			"path": "store-sale-producer"
 		}
 	],
 	"settings": {
