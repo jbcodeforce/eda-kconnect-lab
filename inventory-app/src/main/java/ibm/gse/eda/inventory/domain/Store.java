@@ -8,8 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.Parameter;
-
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity

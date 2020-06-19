@@ -12,13 +12,13 @@ And the component view looks like:
 
 ![](./design/out/solution-view/solution-view.png)
 
-See the [lab instructions](https://ibm-cloud-architecture.github.io/refarch-eda/technology/event-streams/kconnect/) in the EDA main repository for a step by step tutorial.
+See the [lab instructions](https://ibm-cloud-architecture.github.io/refarch-eda/technology/event-streams/kconnect/) in the EDA main repository for a step by step tutorial covering the different connectors used in the solution.
 
 ## Pre-requisites
 
-The goal is to run all those components on an OpenShift cluster and use Cloud Pak for integration event streams and MQ instances.
+The ultimate goal is to run all those components on an OpenShift cluster and use Cloud Pak for Integration with Event Streams and MQ instances.
 
-For a solution running most of the component locally with Event Streams on Cloud, see the [lab instructions](https://ibm-cloud-architecture.github.io/refarch-eda/technology/event-streams/kconnect/) in the EDA main repository for a step by step tutorial.
+For a solution running most of the component locally with Event Streams on Cloud, see the [lab instructions](https://ibm-cloud-architecture.github.io/refarch-eda/technology/event-streams/kconnect/).
 
 ## Build and run locally
 
@@ -46,14 +46,30 @@ docker build -t ibmcase/kconlab:1.0.0 .
 
 ### Run locally
 
-Under the infrastructure folder we have different docker compose depending of the backend to start:
+Under the `infrastructure` folder we have different docker compose file to support different test scenarios:
 
 * `MQ-Kconnect-compose.yaml` for IBM MQ and the kafka connect.
+* `RabbitMQ-Kconnect-compose.yaml` for Rabbit MQ with Kafka Connect and the Store item sales generator app.
 
+### Rabbit MQ
+
+Quick set of things to do:
 
 ```shell
-docker-compose up &
+# Start Rabbit mq and kafka connect and the store item sale generator: under infrastructure
+
+docker-compose -f  RabbitMQ-Kconnect-compose.yaml up
+# Upload the connector configuration
+curl -X POST -H "Content-Type: application/json" http://localhost:8083/connectors   --data "@./rabbitmq-source.json"
 ```
+
+# Once done delete the connector
+
+```
+curl -X DELETE http://localhost:8083/connectors/RabbitMQSourceConnector
+```
+
+## IBM MQ Sink connector
 
 Deploy the connector with a POST to the connectors url
 
