@@ -8,3 +8,5 @@ kconnect/kafka-connect-rabbitmq-source/
 kconnect/db2-sink-config.json
 infrastructure/qm1data/
 scripts/kafka.properties
+item-aggregator/src/main/resources/application.properties
+item-aggregator/target
