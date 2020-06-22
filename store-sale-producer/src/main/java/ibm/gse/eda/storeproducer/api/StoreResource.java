@@ -1,4 +1,4 @@
-package ibm.gse.eda;
+package ibm.gse.eda.storeproducer.api;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -13,7 +13,6 @@ import ibm.gse.eda.stores.domain.ItemSaleMessage;
 import ibm.gse.eda.stores.infrastructure.ItemSaleGenerator;
 
 @Path("/sales")
-
 public class StoreResource {
 
     @Inject
@@ -27,7 +26,7 @@ public class StoreResource {
 
     @POST
     @Path("/start/{records}")
-    public Response startSendingMessage(@PathParam int records) {
+    public Response startSendingMessage(@PathParam final int records) {
         generator.start(records);
         return Response.ok().status(201).build();
     }

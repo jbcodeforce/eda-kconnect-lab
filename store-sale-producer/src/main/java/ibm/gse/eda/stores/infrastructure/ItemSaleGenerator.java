@@ -20,11 +20,25 @@ import io.reactivex.Flowable;
 public class ItemSaleGenerator {
 
     @Inject
-    @ConfigProperty(name = "amqp-queue")
+    @ConfigProperty(name = "amqp.queue")
     public String queueName;
     @Inject
-    @ConfigProperty(name = "amqp-host")
+    @ConfigProperty(name = "amqp.host")
     public String hostname;
+    @Inject
+    @ConfigProperty(name = "amqp.port")
+    public int port;
+
+    @Inject
+    @ConfigProperty(name = "amqp.username")
+    public String username;
+    @Inject
+    @ConfigProperty(name = "amqp.password")
+    public String password;
+    @Inject 
+    @ConfigProperty(name = "amqp.virtualHost")
+    public String virtualHost;
+
 
     private long id = 0;
     private String[] stores = {"SC01","SF01","SF02","PT01","PT02","SEA01","NYC01","NYC02","LA01","LA02"};
@@ -59,6 +73,10 @@ public class ItemSaleGenerator {
 	public void start(int records) {
         this.factory = new ConnectionFactory();
         this.factory.setHost(hostname);
+        this.factory.setPort(port);
+        this.factory.setUsername(username);
+        this.factory.setPassword(password);
+        this.factory.setVirtualHost(virtualHost);
         try {
             connection = factory.newConnection();
             channel = connection.createChannel();

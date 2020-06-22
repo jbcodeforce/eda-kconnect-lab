@@ -133,4 +133,5 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/io/quarkus/quarkus-kubernetes/1.4.2.Final/quarkus-kubernetes-1.4.2.Final.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/io/quarkus/quarkus-kubernetes-client-internal/1.4.2.Final/quarkus-kubernetes-client-internal-1.4.2.Final.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/ibm/db2/jcc/11.5.0.0/jcc-11.5.0.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/io/quarkus/quarkus-container-image-docker/1.4.2.Final/quarkus-container-image-docker-1.4.2.Final.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>
