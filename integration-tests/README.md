@@ -32,10 +32,10 @@ The goal is to validate event streams connection and sending event to be process
 ### Prepare and run
 
 1. Under the integration-tests folder start a python environment: `./startPython.sh`
-1. In the bash inside the python container execute the following command to send two events based on a payload that looks like: 
+1. In the bash shell, inside the python container, execute the following command to send two events based on a payload that looks like: 
 
 ```json
-{"storeName": "LA02", "itemCode": "IT08", "id": 1, "timestamp": 1591142867.188271}
+{"storeName": "LA02", "itemCode": "IT08", "quantity": 3, "price": 20, "id": 1, "timestamp": 1591142867.188271}
 ```
 
 ```shell

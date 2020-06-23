@@ -12,8 +12,8 @@
         "mq.user.name": "admin",
         "mq.password": "passw0rd",
         "mq.user.authentication.mqcsp": true,
-        "mq.channel.name": "DEV.APP.SVRCONN",
-        "mq.queue": "DEV.QUEUE.1",
+        "mq.channel.name": "KAFKA.CHANNEL",
+        "mq.queue": "INVENTORY",
         "mq.message.builder": "com.ibm.eventstreams.connect.mqsink.builders.DefaultMessageBuilder"
     }
 }

@@ -15,7 +15,7 @@ services:
                 - ./rabbitmq/logs/:/var/log/rabbitmq
     kconnect:
         build: ../kconnect
-        image: ibmcase/kconlab:1.0.0
+        image: ibmcase/kconnect:1.0.0
         ports:
             - '8083:8083'
     inventoryapp:
