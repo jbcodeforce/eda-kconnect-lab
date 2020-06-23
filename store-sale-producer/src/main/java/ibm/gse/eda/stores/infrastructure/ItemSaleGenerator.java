@@ -2,6 +2,7 @@ package ibm.gse.eda.stores.infrastructure;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,7 +19,9 @@ import io.reactivex.Flowable;
 
 @ApplicationScoped
 public class ItemSaleGenerator {
-
+    private static Logger LOG = Logger.getLogger(ItemSaleGenerator.class.getName());
+ 
+    
     @Inject
     @ConfigProperty(name = "amqp.queue")
     public String queueName;
@@ -85,6 +88,7 @@ public class ItemSaleGenerator {
             for (int i = 0; i < records; i++) {
                 ItemSaleMessage item = buildNext();
                 String messageToSend = parser.toJson(item);
+                LOG.info(messageToSend);
                 this.channel.basicPublish("", queueName, null, messageToSend.getBytes());
             }
         } catch (Exception e) {

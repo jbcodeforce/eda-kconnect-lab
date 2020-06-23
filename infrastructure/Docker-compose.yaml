@@ -7,6 +7,13 @@ services:
         ports:
             - '15672:15672'
             - '5672:5672'
+        environment:
+           RABBITMQ_DEFAULT_USER: rabbit-user
+           RABBITMQ_DEFAULT_PASS: rabbit-pass
+        volumes:
+            - ./rabbitmq/enable_plugins:/etc/rabbitmq/enabled_plugins
+            - ./rabbitmq/data/:/var/lib/rabbitmq
+            - ./rabbitmq/logs/:/var/log/rabbitmq
     ibmmq:
         image: ibmcom/mq
         ports:
@@ -32,6 +39,8 @@ services:
         image: ibmcase/eda-inventory-app:1.0.0
         ports:
             - '8082:8080'
+        depends_on:
+            - "ibmmq"
     storeSaleGenerator:
         hostname: storeapp
         image: ibmcase/store-sale-producer:1.0.0
@@ -40,7 +49,7 @@ services:
         environment:
             AMQP_HOST: rabbitmq
         depends_on:
-            - rabbitmq
+            - "rabbitmq"
     itemaggregator:
         hostname: itemaggregator
         image: ibmcase/itemaggregator:1.0.0
@@ -52,7 +61,7 @@ services:
         ports:
             - '8084:8080'
         depends_on:
-            - ibmmq
+            - "ibmmq"
 volumes:
     qm1data:
 networks:
