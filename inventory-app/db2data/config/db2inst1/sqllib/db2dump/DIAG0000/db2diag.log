@@ -1,0 +1,44 @@
+
+2020-06-30-14.55.36.349241+000 I1E1835               LEVEL: Event
+PID     : 4354                 TID : 139949787879296 PROC : db2flacc
+INSTANCE: db2inst1             NODE : 000
+HOSTNAME: 421779cf04c6
+FUNCTION: DB2 UDB, RAS/PD component, pdLogInternal, probe:120
+START   : New Diagnostic Log file
+DATA #1 : Build Level, 248 bytes
+Instance "db2inst1" uses "64" bits and DB2 code release "SQL11050"
+with level identifier "0601010F".
+Informational tokens are "DB2 v11.5.0.0", "s1906101300", "DYN1906101300AMD64", Fix Pack "0".
+DATA #2 : System Info, 664 bytes
+System: Linux 421779cf04c6 19 4 x86_64
+CPU: total:3 online:3 Cores per socket:1 Threading degree per core:1 SIMD:Y CPU Features:SSE2,SSSE3,SSE4,AVX2
+CPU binding: not in use
+Physical Memory(MB): total:9971 free:2306
+Virtual  Memory(MB): total:10995 free:3330
+Swap     Memory(MB): total:1024 free:1024
+Kernel   Params: msgMaxMessageSize:8192 msgMsgMap:16384 msgMaxQueueIDs:32000
+                 msgNumberOfHeaders:16384 msgMaxQueueSize:16384
+                 msgMaxSegmentSize:16 shmMax:9223372036854775807 shmMin:1
+                 shmIDs:4096 shmSegments:4096 semMap:1024000000 semIDs:32000
+                 semNum:1024000000 semUndo:1024000000 semNumPerID:32000
+                 semOps:500 semUndoSize:20 semMaxVal:32767
+                 semAdjustOnExit:32767
+Cur cpu time limit (seconds)  = 0xFFFFFFFFFFFFFFFF
+Cur file size limit (bytes) = 0xFFFFFFFFFFFFFFFF
+Cur data size (bytes)  = 0xFFFFFFFFFFFFFFFF
+Cur stack size (bytes)  = 0x0000000000800000
+Cur core size (bytes)  = 0x0000000000000000
+Cur memory size (bytes) = 0xFFFFFFFFFFFFFFFF
+nofiles (descriptors)  = 0x0000000000100000
+Cur maximum number of processes = 0x0000000000001000
+Disk: 4K Device Support: NONE
+
+Information in this record is only valid at the time when this file was
+created (see this record's time stamp)
+
+2020-06-30-14.55.36.354379+000 I1837E327             LEVEL: Event
+PID     : 4354                 TID : 139949787879296 PROC : db2flacc
+INSTANCE: db2inst1             NODE : 000
+HOSTNAME: 421779cf04c6
+FUNCTION: DB2 UDB, config/install, sqlfLogUpdateCfgParam, probe:30
+CHANGE  : CFG DBM: "Sysadm_group" From: ""  To: "db2iadm1" 

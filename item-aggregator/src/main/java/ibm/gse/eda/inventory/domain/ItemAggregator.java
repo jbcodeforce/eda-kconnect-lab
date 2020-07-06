@@ -1,5 +1,7 @@
 package ibm.gse.eda.inventory.domain;
 
+import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.reactive.messaging.Incoming;
