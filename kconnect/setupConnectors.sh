@@ -15,6 +15,7 @@ then
    cd kafka-connect-mq-sink
    mvn clean  package
    cp ./target/kafka-connect*jar-with-dependencies.jar ../libs/
+   cd ..
 fi
 
 echo "Do you want to use IBM JDBC sink [Y/n] ?"
@@ -25,6 +26,7 @@ then
    cd kafka-connect-jdbc-sink
    mvn clean  package
    cp ./target/kafka-connect*jar-with-dependencies.jar ../libs/
+   cd ..
 fi
 
 echo "Do you want to use IBM RabbitMQ source [Y/n] ?"
@@ -35,4 +37,5 @@ then
    cd kafka-connect-rabbitmq-source
    mvn clean  package
    cp ./target/kafka-connect*jar-with-dependencies.jar ../libs/
+   cd ..
 fi
