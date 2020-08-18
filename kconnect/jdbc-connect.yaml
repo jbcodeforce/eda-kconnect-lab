@@ -1,0 +1,22 @@
+apiVersion: eventstreams.ibm.com/v1alpha1
+kind: KafkaConnector
+metadata:
+  name: kconnect-jdbc
+  namespace: eventstreams
+  labels:
+    eventstreams.ibm.com/cluster: kconnect
+spec:
+  class: com.ibm.eventstreams.connect.jdbcsink.JDBCSinkConnector
+  config:
+    topics: kconnect
+    connection.url: jdbc:db2://dashdb-txn-sbox-yp-dal09-10.services.dal.bluemix.net:50000/BLUDB
+    connection.user: gcx70743
+    connection.password: 6p9nck083d-qb2ld
+    connection.ds.pool.size: 5
+    insert.mode.databaselevel: true
+    table.name.format: GCX70743.COMPANY
+    tasks.max: 1
+    key.converter.schemas.enable: true
+    value.converter.schemas.enable: true
+    key.converter: org.apache.kafka.connect.json.JsonConverter
+    value.converter: org.apache.kafka.connect.json.JsonConverter
