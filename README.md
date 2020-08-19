@@ -1,8 +1,8 @@
 # Kafka Connect with Event Streams on Cloud
 
-This repository includes a set of component to demonstrate some of the Kafka Connect connectors from the IBM Event messaging team.
+This repository includes a set of components to demonstrate some of the Kafka Connect connectors developed by the IBM Event messaging extended team.
 
-We are using a classical, yet simple implementation of item consumption in store and centralized inventory using a simple real time streaming solution instead of batch based approach, as a lot of distribution industry companies are using today.
+We are using a classical, yet simple implementation, of good items sold in store and how to use kafka stream to get a centralized view of the goods inventory. The business goal is to get a real time inventory view instead of relaying on batch jobs run daily. A lot of distribution industry companies are moving to this approach.
 
 The system context looks like:
 
@@ -16,13 +16,16 @@ See the [lab instructions](https://ibm-cloud-architecture.github.io/refarch-eda/
 
 ## Pre-requisites
 
-The ultimate goal is to run all those components on an OpenShift cluster and use Cloud Pak for Integration with Event Streams and MQ instances.
+The ultimate goal is to run all those components on an OpenShift cluster and use Cloud Pak for Integration with Event Streams and MQ instances. So you need:
 
-For a solution running most of the component locally with Event Streams on Cloud, see the [lab instructions](https://ibm-cloud-architecture.github.io/refarch-eda/technology/event-streams/kconnect/).
+* an OpenShift cluster with at least version 4.4
+* Cloud Pak for Integration 2020.2
+* Event Streams v10 instance 
+
 
 ## Build and run locally
 
-We are providing docker compose files and maven pom to build and run the components locally for development purpose.
+We are providing docker compose files and maven poms to build and run each component locally for development purpose.
 
 ### Build
 
@@ -46,7 +49,7 @@ docker build -t ibmcase/kconlab:1.0.0 .
 
 ### Run locally
 
-Under the `infrastructure` folder we have different docker compose file to support different test scenarios:
+Under the `infrastructure` folder we have different docker compose files to support different test scenarios:
 
 * `MQ-Kconnect-compose.yaml` for IBM MQ and the kafka connect.
 * `RabbitMQ-Kconnect-compose.yaml` for Rabbit MQ with Kafka Connect and the Store item sales generator app.
@@ -65,7 +68,7 @@ curl -X POST -H "Content-Type: application/json" http://localhost:8083/connector
 
 # Once done delete the connector
 
-```
+```shell
 curl -X DELETE http://localhost:8083/connectors/RabbitMQSourceConnector
 ```
 
@@ -87,7 +90,7 @@ message <{"storeName": "NYC02", "itemCode": "IT02", "quantity": 11, "price": 113
 no more messages
 ```
 
-### Some troubleshouting 
+### Some trouble shooting
 
 * Be sure to have set the consumer and producer credential in the kafka connector, if not you will get a broker disconnection.
 * Be sure to specify the good hostname for the MQ server: `ibmmq` when running locally

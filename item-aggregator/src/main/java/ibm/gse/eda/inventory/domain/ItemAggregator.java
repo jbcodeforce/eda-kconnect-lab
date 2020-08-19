@@ -11,17 +11,18 @@ import io.smallrye.reactive.messaging.annotations.Broadcast;
 
 @ApplicationScoped
 public class ItemAggregator {
+    
     private static Logger LOG = Logger.getLogger(ItemAggregator.class.getName());
+    
+    /*
     @Incoming("item-channel")                            
     @Outgoing("inventory-channel")                         
     @Broadcast    
+    */
     public Inventory processItem(Item item) {
             Inventory inventory = new Inventory();
-            inventory.itemCode = item.itemCode;
-            inventory.price = item.price;
-            inventory.quantity = item.quantity;
             inventory.storeName = item.storeName;
-            LOG.info("Inventory created for " +  inventory.itemCode + " in " + inventory.storeName);
+            inventory.updateStock(item.itemCode, item.quantity);
             return inventory;
     }
 }
