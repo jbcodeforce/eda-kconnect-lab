@@ -6,6 +6,8 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
 public class Item {
+    public static String RESTOCK = "RESTOCK";
+    public static String SALE = "SALE";
     public Long id;
     public String storeName;
     public String itemCode;
@@ -22,6 +24,14 @@ public class Item {
         this.type = type;
         this.quantity = quantity;
         this.price = price;
+        this.timestamp = LocalDateTime.now().toString();
+	}
+
+	public Item(String store, String item, String type, int quantity) {
+        this.storeName = store;
+        this.itemCode = item;
+        this.type = type;
+        this.quantity = quantity;
         this.timestamp = LocalDateTime.now().toString();
 	}
 }
