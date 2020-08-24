@@ -15,6 +15,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.smallrye.mutiny.Multi;
+
 @QuarkusTest
 @QuarkusTestResource(KafkaResource.class)
 public class InventoryResourceIT {

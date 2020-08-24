@@ -60,7 +60,7 @@ The integration tests use Python scripts. We have a custom python docker images 
 
 * Start the Kafka cluster locally
 
-`docker-compose -f docker-compose-local.yaml up`
+`docker-compose -f docker-compose-dev.yaml up`
 
 * If not done before configure the topics for test: under the `e2e` folder do `./createTopics.sh`
 
@@ -69,8 +69,8 @@ The integration tests use Python scripts. We have a custom python docker images 
 * Start the python environment to send 2 items. Under `e2e` folder, execute following command to start the python environment connected to the docker network where kafka is running:
 
 ```shell
-docker run -v $(pwd):/home -e KAFKA_BROKERS=localhost:9092 \
-     --network host \
+docker run -v $(pwd):/home -e KAFKA_BROKERS=kafka:9092 \
+     --network kafkanet \
       -ti ibmcase/python37 bash -c "python /home/ItemProducer.py"
 ```
 
@@ -80,7 +80,7 @@ In the shell run the item producer: `python ItemProducer.py`
 root@docker-desktop:/home# python ItemProducer.py
 Start Item Sold Event Producer
 INFO:root:--- This is the configuration for the producer: ---
-INFO:root:[KafkaProducer] - {'bootstrap.servers': 'localhost:9092', 'group.id': 'ItemSoldProducer-1', 'delivery.timeout.ms': 15000, 'request.timeout.ms': 15000}
+INFO:root:[KafkaProducer] - {'bootstrap.servers': 'kafka:9092', 'group.id': 'ItemSoldProducer-1', 'delivery.timeout.ms': 15000, 'request.timeout.ms': 15000}
 INFO:root:---------------------------------------------------
 INFO:root:Send {"storeName": "Store-1", "itemCode": "Item-2", "type": "RESTOCK", "quantity": 5} with key itemCode to items
 INFO.. - Message delivered to items [0]
@@ -100,7 +100,7 @@ Store-1	{"stock":{"Item-2":7},"storeName":"Store-1"}
 * The last statement is accessible from the Kafka Stream KTable, via the REST api: 
 
 ```shell
-curl http://localhost:8082/inventory/store/Store-1/Item-2
+curl http://localhost:8002/inventory/store/Store-1/Item-2
 
 # should get a result like:
 {
@@ -111,7 +111,7 @@ curl http://localhost:8082/inventory/store/Store-1/Item-2
 }
 ```
 
-The API is visible via the swagger-ui: `http://localhost:8082/swagger-ui/`
+The API is visible via the swagger-ui: `http://localhost:8080/swagger-ui/`
 
 ## Deploy on OpenShift cluster with Event Streams running
 

@@ -44,10 +44,10 @@ services:
       - QUARKUS_KAFKA_STREAMS_BOOTSTRAP_SERVERS=kafka:9092
       - QUARKUS_PROFILE=dev
     ports:
-      - "8080:8080"
+      - "8080:8082"
       - "5005:5005"
     working_dir: /app
-    command: "mvn quarkus:dev"
+    command: "./mvnw quarkus:dev"
     networks:
       - kafka-network
 

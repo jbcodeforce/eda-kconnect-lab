@@ -37,9 +37,8 @@ services:
     depends_on:
       - kafka
     environment:
-      BOOTSTRAP_SERVERS: localhost:9092
-      QUARKUS_KAFKA_STREAMS_BOOTSTRAP_SERVERS: localhost:9092
-      QUARKUS_PROFILE: dev
+      BOOTSTRAP_SERVERS: kafka:9092
+      QUARKUS_KAFKA_STREAMS_BOOTSTRAP_SERVERS: kafka:9092
     ports:
       - "8080:8080"
     networks:

@@ -94,4 +94,34 @@ public class InteractiveQueries {
             }
         }
     }
+
+	public ItemQueryResult getItemStock(String itemID) {
+        KeyQueryMetadata metadata = null;
+        LOG.warnv("Search metadata for key {0}", itemID);
+        try {
+            metadata = streams.queryMetadataForKey(
+            StoreInventoryAgent.ITEMS_STORE_NAME,
+            itemID,
+            Serdes.String().serializer());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ItemQueryResult.notFound();
+        }
+        if (metadata == null || metadata == KeyQueryMetadata.NOT_AVAILABLE) {
+            LOG.warnv("Found no metadata for key {0}", itemID);
+            return ItemQueryResult.notFound();
+        } else if (metadata.getActiveHost().host().equals(host)) {
+            LOG.infov("Found data for key {0} locally", itemID);
+            Long result = getItemStore().get(itemID);
+
+            if (result != null) {
+                return ItemQueryResult.found(result);
+            } else {
+                return ItemQueryResult.notFound();
+            }
+        } else {
+            LOG.infov("Found data for key {0} on remote host {1}:{2}", itemID, metadata.getActiveHost().host(), metadata.getActiveHost().port());
+            return ItemQueryResult.foundRemotely(metadata.getActiveHost());
+        }
+	}
 }
