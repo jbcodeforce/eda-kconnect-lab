@@ -113,5 +113,5 @@ curl http://localhost:8002/inventory/store/Store-1/Item-2
 
 The API is visible via the swagger-ui: `http://localhost:8080/swagger-ui/`
 
-## Deploy on OpenShift cluster with Event Streams running
+## Deploy on OpenShift cluster with Event Streams
 

@@ -14,7 +14,6 @@ import org.apache.kafka.streams.StoreQueryParameters;
 import org.apache.kafka.streams.errors.InvalidStateStoreException;
 import org.apache.kafka.streams.state.QueryableStoreTypes;
 import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
-import org.apache.kafka.streams.state.StreamsMetadata;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
@@ -43,7 +42,7 @@ public class InteractiveQueries {
                 .collect(Collectors.toList());
     }
 
-    public InventoryQueryResult getStoreStock(String storeID, String itemID) {
+    public InventoryQueryResult getStoreStock(String storeID) {
         KeyQueryMetadata metadata = null;
         LOG.warnv("Search metadata for key {0}", storeID);
         try {
@@ -95,24 +94,24 @@ public class InteractiveQueries {
         }
     }
 
-	public ItemQueryResult getItemStock(String itemID) {
+	public ItemQueryResult getItemStock(String sku) {
         KeyQueryMetadata metadata = null;
-        LOG.warnv("Search metadata for key {0}", itemID);
+        LOG.warnv("Search metadata for key {0}", sku);
         try {
             metadata = streams.queryMetadataForKey(
             StoreInventoryAgent.ITEMS_STORE_NAME,
-            itemID,
+            sku,
             Serdes.String().serializer());
         } catch (Exception e) {
             e.printStackTrace();
             return ItemQueryResult.notFound();
         }
         if (metadata == null || metadata == KeyQueryMetadata.NOT_AVAILABLE) {
-            LOG.warnv("Found no metadata for key {0}", itemID);
+            LOG.warnv("Found no metadata for key {0}", sku);
             return ItemQueryResult.notFound();
         } else if (metadata.getActiveHost().host().equals(host)) {
-            LOG.infov("Found data for key {0} locally", itemID);
-            Long result = getItemStore().get(itemID);
+            LOG.infov("Found data for key {0} locally", sku);
+            Long result = getItemStore().get(sku);
 
             if (result != null) {
                 return ItemQueryResult.found(result);
@@ -120,7 +119,7 @@ public class InteractiveQueries {
                 return ItemQueryResult.notFound();
             }
         } else {
-            LOG.infov("Found data for key {0} on remote host {1}:{2}", itemID, metadata.getActiveHost().host(), metadata.getActiveHost().port());
+            LOG.infov("Found data for key {0} on remote host {1}:{2}", sku, metadata.getActiveHost().host(), metadata.getActiveHost().port());
             return ItemQueryResult.foundRemotely(metadata.getActiveHost());
         }
 	}

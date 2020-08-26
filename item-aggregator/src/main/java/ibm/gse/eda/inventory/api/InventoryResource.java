@@ -27,17 +27,17 @@ public class InventoryResource {
     public InteractiveQueries queries;
 
     @GET
-    @Path("/store/{storeID}/{itemID}")
+    @Path("/store/{storeID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getStock(@PathParam("storeID") String storeID, @PathParam("itemID") String itemID) {
-        InventoryQueryResult result = queries.getStoreStock(storeID,itemID);
+    public Response getStock(@PathParam("storeID") String storeID) {
+        InventoryQueryResult result = queries.getStoreStock(storeID);
         if (result.getResult().isPresent()) {
             return Response.ok(result.getResult().get()).build();
         } else if (result.getHost().isPresent()) {
-            URI otherUri = getStoreOtherUri(result.getHost().get(), result.getPort().getAsInt(), "/inventory/store", storeID, itemID);
+            URI otherUri = getStoreOtherUri(result.getHost().get(), result.getPort().getAsInt(), "/inventory/store", storeID, null);
             return Response.seeOther(otherUri).build();
         } else {
-            return Response.status(Status.NOT_FOUND.getStatusCode(), "No data found for store " + storeID + " item " + itemID).build();
+            return Response.status(Status.NOT_FOUND.getStatusCode(), "No data found for store " + storeID).build();
         }
     }
 
@@ -49,27 +49,27 @@ public class InventoryResource {
     }
     
     @GET
-    @Path("/item/{itemID}")
+    @Path("/item/{sku}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGlobalItem(@PathParam("itemID") String itemID) {
-        ItemQueryResult result = queries.getItemStock(itemID);
+    public Response getGlobalItem(@PathParam("sku") String sku) {
+        ItemQueryResult result = queries.getItemStock(sku);
         if (result.getResult().isPresent()) {
             return Response.ok(result.getResult().get()).build();
         } else if (result.getHost().isPresent()) {
-            URI otherUri = getStoreOtherUri(result.getHost().get(), result.getPort().getAsInt(), "/inventory/item",null, itemID);
+            URI otherUri = getStoreOtherUri(result.getHost().get(), result.getPort().getAsInt(), "/inventory/item",null, sku);
             return Response.seeOther(otherUri).build();
         } else {
-            return Response.status(Status.NOT_FOUND.getStatusCode(), "No data found for store " + itemID + " item " + itemID).build();
+            return Response.status(Status.NOT_FOUND.getStatusCode(), "No data found for store " + sku + " item " + sku).build();
         }
     }
 
-    private URI getStoreOtherUri(String host, int port, String path, String storeID, String itemID) {
+    private URI getStoreOtherUri(String host, int port, String path, String storeID, String sku) {
         try {
             if (storeID == null) {
-                return new URI("http://" + host + ":" + port + path + "/" + itemID);
+                return new URI("http://" + host + ":" + port + path + "/" + sku);
         
             } else {
-                return new URI("http://" + host + ":" + port + path + "/" + storeID + "/" + itemID);
+                return new URI("http://" + host + ":" + port + path + "/" + storeID);
             }
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);

@@ -15,24 +15,24 @@ public class Inventory {
         this.storeName = storeName;
     }
 
-    public Inventory(String storeName, String itemID, int quantity) {
+    public Inventory(String storeName, String sku, int quantity) {
         this.storeName = storeName;
-        this.updateStock(itemID, quantity);
+        this.updateStock(sku, quantity);
     }
 
     public Inventory updateStockQuantity(String k, Item newValue) {
         this.storeName = k;
         if (newValue.type.equals("SALE")) 
             newValue.quantity=-newValue.quantity;
-        return this.updateStock(newValue.itemCode,newValue.quantity);
+        return this.updateStock(newValue.sku,newValue.quantity);
     }
 
-    public Inventory updateStock(String itemID, long newV) {
-        if (stock.get(itemID) == null) {
-            stock.put(itemID, Long.valueOf(newV));
+    public Inventory updateStock(String sku, long newV) {
+        if (stock.get(sku) == null) {
+            stock.put(sku, Long.valueOf(newV));
         } else {
-            Long currentValue = stock.get(itemID);
-            stock.put(itemID, Long.valueOf(newV) + currentValue );
+            Long currentValue = stock.get(sku);
+            stock.put(sku, Long.valueOf(newV) + currentValue );
         }
         return this;
     }
