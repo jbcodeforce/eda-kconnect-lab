@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: store-sale-cm
+data:
+  # property-like keys; each key maps to a simple value
+  RMQ_HOST: salut
+  RMQ_PORT: 5672
+  RMQ_USER: rabbitmq
+  RMQ_PWD: password

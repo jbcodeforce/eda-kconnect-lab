@@ -35,6 +35,7 @@ public class InventoryResource {
             return Response.ok(result.getResult().get()).build();
         } else if (result.getHost().isPresent()) {
             URI otherUri = getStoreOtherUri(result.getHost().get(), result.getPort().getAsInt(), "/inventory/store", storeID, null);
+            System.out.println("host: " + otherUri.toString());
             return Response.seeOther(otherUri).build();
         } else {
             return Response.status(Status.NOT_FOUND.getStatusCode(), "No data found for store " + storeID).build();

@@ -11,4 +11,7 @@ spec:
         git: 
             uri: "https://github.com/jbcodeforce/eda-kconnect-lab.git"
             ref: "master"
-            contextDir: "item-aggregator" 
+            contextDir: "item-aggregator"
+
+---
+    

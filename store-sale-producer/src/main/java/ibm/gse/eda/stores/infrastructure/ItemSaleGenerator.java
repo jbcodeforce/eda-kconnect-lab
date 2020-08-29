@@ -6,8 +6,9 @@ import java.util.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 
-import com.google.gson.Gson;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -55,7 +56,7 @@ public class ItemSaleGenerator {
         ItemSaleMessage item = new ItemSaleMessage();
         item.id = id;
         item.storeName=stores[random.nextInt(stores.length)];
-        item.itemCode = "IT0" + random.nextInt(9);
+        item.sku = "IT0" + random.nextInt(9);
         item.quantity = random.nextInt(9);
         item.price = random.nextDouble() * 70;
         id++;
@@ -84,7 +85,7 @@ public class ItemSaleGenerator {
             connection = factory.newConnection();
             channel = connection.createChannel();
             channel.queueDeclare(queueName, true, false, false, null);
-            Gson parser = new Gson();
+            Jsonb parser = JsonbBuilder.create();
             for (int i = 0; i < records; i++) {
                 ItemSaleMessage item = buildNext();
                 String messageToSend = parser.toJson(item);

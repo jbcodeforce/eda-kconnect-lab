@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  # credentials guest:guest
+  rabbitmq:
+      hostname: rabbitmq
+      image: rabbitmq:3-management
+      ports:
+          - '15672:15672'
+          - '5672:5672'
+      environment:
+          RABBITMQ_DEFAULT_USER: rabbit-user
+          RABBITMQ_DEFAULT_PASS: rabbit-pass
+      volumes:
+          - ../infrastructure/rabbitmq/enable_plugins:/etc/rabbitmq/enabled_plugins
+  maven:
+    image: maven
+    volumes:
+      - "./:/app"
+      - "~/.m2:/root/.m2"
+    depends_on:
+      - rabbitmq
+    hostname: storeapp
+    environment:
+      - AMQP_HOST=rabbitmq
+      - QUARKUS_PROFILE=dev
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    working_dir: /app
+    command: "./mvnw quarkus:dev"
+      
