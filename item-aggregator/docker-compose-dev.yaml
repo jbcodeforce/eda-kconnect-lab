@@ -38,16 +38,13 @@ services:
       - "~/.m2:/root/.m2"
     depends_on:
       - kafka
-    hostname: aggregator
     environment:
-      - BOOTSTRAP_SERVERS=kafka:9092
-      - QUARKUS_KAFKA_STREAMS_BOOTSTRAP_SERVERS=kafka:9092
-      - QUARKUS_PROFILE=dev
+      - KAFKA_BROKERS=kafka:9092
     ports:
-      - "8080:8082"
+      - "8080:8080"
       - "5005:5005"
     working_dir: /app
-    command: "./mvnw quarkus:dev"
+    command: "./mvnw quarkus:dev -DKAFKA_BROKERS=$KAFKA_BROKERS"
     networks:
       - kafka-network
 

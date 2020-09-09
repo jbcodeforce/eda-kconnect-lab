@@ -11,4 +11,5 @@ infrastructure/rabbitmq/data/
 infrastructure/rabbitmq/logs/
 scripts/kafka.properties
 item-aggregator/src/main/resources/application.properties
-item-aggregator/target
+**/target/
+../eda-kconnect.code-workspace

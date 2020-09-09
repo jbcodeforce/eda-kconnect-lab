@@ -2,17 +2,17 @@
 
 The goals of this project are:
 
-* create a quarkus app using reactive messaging to consume items sold in store events
+* create a quarkus app using reactive messaging to consume items sold in store
 * aggregate store id -> item id -> item sold count
 * aggregate item id -> total sold so far
-* generate events on inventory topic used item id -> total sold
+* generate events on inventory topic using storeID -> [items] in stock
 
 The kafka elements used:
 
 * in-topic items
 * out-topic inventory
-* ktable item, count  with store
-* ktable store-item, count with store
+* ktable <itemID, count> with store
+* ktable <storeID, <itemID, count> with store
 * Interactive query to get data from partitioned topic
 
 ## How asset is created
@@ -39,20 +39,18 @@ Some explanations on the topology can be found in the class [StoreInventoryAgent
             .withKeySerde(Serdes.String())
             .withValueSerde(inventorySerde));
 ```
+
 First row is to initialize new key, record with an empty Inventory object. 
 The second row is executed when a key is found (first key too), and update the currentInventory with the new quantity from the item. 
 The content is materialized in a store. This store can be query to answer to an API like `/inventory/store/{storeid}/{itemid}`.
 
-As items topic can be partioned, a REST call may not reach the good end points, as the local store may not have the expected queried key. So the code is using interactive query to get access to the local state stores or return a URL of a remote store where the records for the given key are.
+As items topic can be partitioned, a REST call may not reach the good end points, as the local store may not have the expected queried key. So the code is using interactive query to get access to the local state stores or return a URL of a remote store where the records for the given key are.
 
 ## How to run it
 
-Start Kafka locally with `docker-compose up`, then start a builder docker container connected to the same local docker network and running `quarkus:dev`
+Start Kafka locally with `docker-compose -f docker-compose-dev.yaml up`, which also starts a maven pod to build and run `quarkus:dev`.
 
-```shell
-docker build -f Dockerfile-dev -t tmp-builder .
-docker run --rm -p 8080:8080 -ti --network kafkanet -v ~/.m2:/root/.m2 tmp-builder
-```
+Use kafkacat to send message to items
 
 # End to end testing
 

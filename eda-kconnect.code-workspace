@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "inventory-app"
+		},
+		{
+			"path": "../refarch-eda"
+		},
+		{
+			"path": "../../AllCloudPaks/vaccine-order-mgr"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}

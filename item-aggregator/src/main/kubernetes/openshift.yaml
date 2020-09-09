@@ -14,4 +14,10 @@ spec:
             contextDir: "item-aggregator"
 
 ---
-    
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: item-integrator-cm
+data:
+    user: minimal-prod-ibm-es-kafka-user
+    brokers: minimal-prod-kafka-bootstrap.eventstreams.svc:9093
