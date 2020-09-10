@@ -99,7 +99,7 @@ spec:
       name: user-cert
       readOnly: true
       subPath: user.p12
-    volumes:
+  volumes:
     - name: user-cert
       secret:
         secretName: minimal-prod-ibm-es-kafka-user

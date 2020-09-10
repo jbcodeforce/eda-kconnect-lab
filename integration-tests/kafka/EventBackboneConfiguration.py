@@ -1,8 +1,9 @@
 import os
 
 KAFKA_BROKERS = os.getenv("KAFKA_BROKERS","kafka1:9092")
-KAFKA_APIKEY = os.getenv("KAFKA_APIKEY","")
-KAFKA_CERT = os.getenv("KAFKA_CERT","")
+KAFKA_USER = os.getenv("KAFKA_USER","")
+KAFKA_PASSWORD = os.getenv("KAFKA_PASSWORD","")
+KAFKA_CERT_PATH = os.getenv("KAFKA_CERT_PATH","")
 
 
 def getBrokerEndPoints():
