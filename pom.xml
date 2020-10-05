@@ -10,7 +10,6 @@
         <module>inventory-app</module>
         <module>inventory-mq-listener</module>
         <module>store-sale-producer</module>
-        <module>item-aggregator</module>
     </modules>
     <build>
         <plugins>
