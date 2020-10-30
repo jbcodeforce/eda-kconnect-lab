@@ -1,7 +1,7 @@
 # Build a custom image for kafka connect, using kafka 2.5 from strimzi image
 # but change user to be esuser, so to do not run as root on k8s / Openshift
 
-FROM strimzi/kafka:latest-kafka-2.5.0 as builder
+FROM strimzi/kafka:latest-kafka-2.6.0 as builder
 FROM ibmjava:8-jre
 
 RUN addgroup --gid 5000 --system esgroup && \

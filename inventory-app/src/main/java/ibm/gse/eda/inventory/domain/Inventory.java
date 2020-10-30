@@ -19,6 +19,7 @@ public class Inventory extends PanacheEntity {
     public String storeName;
     public String itemCode;
     public Long quantity;
+    public String timestamp;
     
     public Inventory(){}
 }
