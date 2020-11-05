@@ -1,8 +1,7 @@
 # Kafka Connect with Event Streams on Cloud
 
-This repository includes a set of components to demonstrate some of the Kafka Connect connectors developed by the IBM Event messaging extended team.
+DEPRECATED -> See new content in EDA/ use cases and refarch-eda-tools repository.
 
-We are using a classical, yet simple implementation, of good items sold in store and how to use kafka stream to get a centralized view of the goods inventory. The business goal is to get a real time inventory view instead of relaying on batch jobs run daily. A lot of distribution industry companies are moving to this approach.
 
 The system context looks like:
 
@@ -14,38 +13,7 @@ And the component view looks like:
 
 See the [lab instructions](https://ibm-cloud-architecture.github.io/refarch-eda/technology/event-streams/kconnect/) in the EDA main repository for a step by step tutorial covering the different connectors used in the solution.
 
-## Pre-requisites
 
-The ultimate goal is to run all those components on an OpenShift cluster and use Cloud Pak for Integration with Event Streams and MQ instances. So you need:
-
-* an OpenShift cluster with at least version 4.4
-* Cloud Pak for Integration 2020.2
-* Event Streams v10 instance 
-
-
-## Build and run locally
-
-We are providing docker compose files and maven poms to build and run each component locally for development purpose.
-
-### Build
-
-Do the following within this folder, to build each of the different modules
-
-```shell
-mvn build
-```
-
-### Build and configure connector
-
-Under the `kconnect` folder we have a simple script to get the 3 connector to use, compile and package them, then copy jars for the connectors to the `kconnect/libs` folder. Once done the 3 configurations for each connector assumes to connect to a remote Event Streams cluster on cloud, and use RabbitMQ, Db2 and MQ locally.
-
-The file `connect-distributed-TMPL.properties` is a template for the connection definition. Change the APIKEY and BROKERS end points, then rename the file as `connect-distributed.properties`.
-
-Finally as we are using custom adaptor, we need to build a Kafka connector image:
-
-```shell
-docker build -t ibmcase/kconlab:1.0.0 .
-```
 
 ### Run locally
 

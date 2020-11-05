@@ -14,7 +14,7 @@ import kafka.EventBackboneConfiguration as ebc
 GROUPID="ProducerInventory"
 NBRECORDS=1
 TOPICNAME="inventory"
-STORES = [ 'SC01','SF01','SF02','PT01', 'PT02', 'SEA01','NYC01','NYC02', 'LA01', 'LA02' ]
+STORES = [ 'Store_1','Store_2','Store_3','Store_4', 'Store_5' ]
 KEYNAME = 'id'
 
 def parseArguments():
@@ -58,7 +58,7 @@ def processRecords(nb_records,topicname):
         for i in range(0,nb_records):
             docToSend = {} 
             docToSend['storeName'] = STORES[random.randint(0,len(STORES)-1)]
-            docToSend['itemCode'] = 'IT0' + str(random.randint(0,9))
+            docToSend['sku'] = 'Item_' + str(random.randint(0,9))
             docToSend['quantity'] = random.randint(0,20)
             docToSend['price'] = random.randint(20,200)
             docToSend['id']=i;
